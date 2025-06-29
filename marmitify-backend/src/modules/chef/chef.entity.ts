@@ -22,6 +22,21 @@ export class Chef {
     @Column({ default: true })
     isActive: boolean;
 
+    @Column({ length: 100 })
+    fullName: string;
+
+    @Column({ length: 50 })
+    cuisineType: string;
+
+    @Column({ type: 'text' })
+    experience: string;
+
+    @Column({ type: 'text', nullable: true })
+    profilePicture: string;
+    
+    @Column({ type: 'text' })
+    briefDescription: string;
+
     @CreateDateColumn()
     createdAt: Date;
 
