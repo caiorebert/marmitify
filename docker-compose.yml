@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: marmitify-postgres
+    environment:
+      POSTGRES_DB: marmitify
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Aplicação Marmitify (Frontend + Backend)
+  marmitify:
+    build: .
+    container_name: marmitify-app
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    environment:
+      # Configurações do banco
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DATABASE=marmitify
+      - POSTGRES_URL=postgres://postgres:postgres@postgres:5432/marmitify
+      
+      # Configurações da aplicação
+      - NODE_ENV=development
+      - JWT_SECRET=dev-jwt-secret-123
+      - NEXTAUTH_SECRET=dev-nextauth-secret-123
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXT_PUBLIC_API_URL=http://localhost:3001
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    name: marmitify-network
