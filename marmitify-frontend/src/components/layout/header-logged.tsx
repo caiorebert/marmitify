@@ -12,6 +12,16 @@ export function Header() {
 
   useEffect(() => {}, [session]);
 
+  if (!session) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 to-pink-50">
+        <div className="text-center">
+          <p className="text-lg text-zinc-700">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <header className="w-full h-[100px] bg-orange-500 flex items-center justify-between px-[100px] relative">
       {/* Logo */}
@@ -45,13 +55,25 @@ export function Header() {
             >
               Meu Perfil
             </Link>
-            <Link
-              href="/chef/register"
-              className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
-              onClick={() => setOpen(false)}
-            >
-              Torne-se um Chef
-            </Link>
+            {
+              //@ts-ignore
+              session?.user?.isChef ?
+                <Link
+                  href="/chef"
+                  className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard do Chef
+                </Link>
+                :
+                <Link
+                  href="/chef/register"
+                  className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100"
+                  onClick={() => setOpen(false)}
+                >
+                  Torne-se um Chef
+                </Link>
+            }
             <Link
               href=""
               className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100"

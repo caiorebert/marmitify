@@ -12,6 +12,7 @@ export default function ChefProfilePage() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    endereco: ""
   });
   const [loading, setLoading] = useState(false);
 
@@ -46,6 +47,7 @@ export default function ChefProfilePage() {
     setForm({
       name: session.user.name || "",
       email: session.user.email || "",
+      endereco: session.user.endereco || ""
     });
   }
 
@@ -100,6 +102,18 @@ export default function ChefProfilePage() {
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Endereço
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Digite seu endereço"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                    value={form.endereco}
+                    onChange={(e) => setForm({ ...form, endereco: e.target.value })}
                   />
                 </div>
                 <button

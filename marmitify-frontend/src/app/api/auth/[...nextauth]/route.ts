@@ -53,11 +53,12 @@ const handler = NextAuth({
         token.name = user.name;
         // @ts-ignore
         token.email = user.email;
+        // @ts-ignore
+        token.endereco = user.endereco || "";
       }
       return token;
     },
     async session({ session, token }) {
-      console.log("Session callback:", session, token);
       if (token.id != undefined) {
         // @ts-ignore
         const user = await buscaUser(token.id, token.accessToken);
@@ -65,6 +66,7 @@ const handler = NextAuth({
           id: user.id,
           name: user.name,
           email: user.email,
+          endereco: user.endereco || "",
           // outros campos necessários
         };
 
@@ -83,6 +85,8 @@ const handler = NextAuth({
         session.user.name = token.name;
         // @ts-ignore
         session.user.email = token.email;
+        // @ts-ignore
+        session.user.endereco = token.endereco || "";
       }
       
       // @ts-ignore

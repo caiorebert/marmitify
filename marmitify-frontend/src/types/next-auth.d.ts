@@ -7,6 +7,7 @@ declare module "next-auth" {
       id: string;
       name: string;
       email: string;
+      endereco?: string;
     } & DefaultSession["user"];
   }
 
@@ -14,6 +15,7 @@ declare module "next-auth" {
     id: string;
     name: string;
     email: string;
+    endereco?: string;
     access_token: string;
   }
 }

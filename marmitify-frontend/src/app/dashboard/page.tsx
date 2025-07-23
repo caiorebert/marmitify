@@ -57,7 +57,17 @@ export default function DashboardPage() {
             </h2>
 
             <div className="flex items-center gap-1 mt-1">
-              <span className="text-zinc-700 text-base">{address}</span>
+              {
+                session?.user?.endereco ? (
+                  <span className="text-zinc-700 text-base">
+                    {session.user.endereco}
+                  </span>
+                ) : (
+                  <span className="text-zinc-700 text-base">
+                    Endereço não definido
+                  </span>
+                )
+              }
               <ChevronDown className="w-4 h-4 text-orange-600 cursor-pointer" />
             </div>
           </div>
@@ -75,10 +85,6 @@ export default function DashboardPage() {
             </Link>
           </div>
         </section>
-
-        {/* Componente com abas e cards */}
-        <MealTabs />
-
         <h3 className="text-2xl mt-6 font-semibold text-zinc-900">
           Chefes especiais
         </h3>

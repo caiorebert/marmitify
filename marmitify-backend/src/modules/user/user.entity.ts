@@ -19,6 +19,9 @@ export class User {
   @Column({ unique: true, length: 100 })
   email: string;
 
+  @Column({ length: 255, nullable: true })
+  endereco: string;
+
   @Column()
   password: string;
 
